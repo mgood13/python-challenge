@@ -3,6 +3,8 @@ import csv
 
 
 budgetdata = os.path.join('Resources', 'budget_data.csv')
+
+# Declare all the variables that we will need for this program
 count = 0
 profit = 0
 currentpl = 0
@@ -44,13 +46,13 @@ with open(budgetdata, 'r') as budgetfile:
             print(currentpl-previouspl)
             previouspl = currentpl
 
+        # This if statement evaluates whether the current change is of greater magnitude than the current "winners"
         if changes[count-1] > 0 and changes[count-1] > greatgain:
             greatgain = changes[count-1]
             brightday = i[0]
         elif changes[count-1] < 0 and changes[count-1] < greatloss:
             greatloss = changes[count-1]
             darkday = i[0]
-
 
         profit = profit + currentpl
 
