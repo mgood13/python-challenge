@@ -10,6 +10,10 @@ previouspl = 0
 changes = []
 totalpl = 0
 avgpl = 0.0
+greatgain = 0
+brightday = ""
+greatloss = 0
+darkday = ""
 
 
 
@@ -40,6 +44,13 @@ with open(budgetdata, 'r') as budgetfile:
             print(currentpl-previouspl)
             previouspl = currentpl
 
+        if changes[count-1] > 0 and changes[count-1] > greatgain:
+            greatgain = changes[count-1]
+            brightday = i[0]
+        elif changes[count-1] < 0 and changes[count-1] < greatloss:
+            greatloss = changes[count-1]
+            darkday = i[0]
+
 
         profit = profit + currentpl
 
@@ -51,3 +62,5 @@ with open(budgetdata, 'r') as budgetfile:
     # Also round because we don't really need those extra 11 decimal places
     avgpl = round(totalpl / (count-1), 2)
     print(avgpl)
+    print("Greatest Gain: " + brightday + ": " + str(greatgain))
+    print("Greatest Loss: " + darkday + ": " + str(greatloss))
