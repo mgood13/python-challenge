@@ -3,6 +3,7 @@ import csv
 
 
 budgetdata = os.path.join('Resources', 'budget_data.csv')
+analysis = os.path.join('analysis','Financial_Analysis.txt')
 
 # Declare all the variables that we will need for this program
 count = 0
@@ -19,15 +20,16 @@ darkday = ""
 
 
 def generateoutput(months, total, average, goodday, maxprofit, badday, maxloss):
-    # This clears the terminal so that our analysis will not be crowded out
-    os.system('clear')
-    print('Financial Analysis')
-    print('--------------------')
-    print('Total Months: ' + str(months))
-    print('Total: $' + str(total))
-    print('Average Change: $' + str(average))
-    print('Greatest Increase in Profits: ' + goodday + " ($" + str(maxprofit) + ")")
-    print('Greatest Decrease in Profits: ' + badday + " ($" + str(maxloss) + ")")
+    # This function puts the output into a nice string that can be written into a file or printed to the terminal
+    formatted = ('Financial Analysis' + '\n' 
+                '--------------------' + '\n' +
+                'Total Months: ' + str(months) + '\n'
+                'Total: $' + str(total) + '\n'
+                'Average Change: $' + str(average) + '\n'
+                'Greatest Increase in Profits: ' + goodday + " ($" + str(maxprofit) + ")" + '\n'
+                'Greatest Decrease in Profits: ' + badday + " ($" + str(maxloss) + ")")
+
+    return formatted
 
 
 
@@ -77,4 +79,12 @@ with open(budgetdata, 'r') as budgetfile:
     # Also round because we don't really need those extra 11 decimal places
     avgpl = round(totalpl / (count-1), 2)
 
-    generateoutput(count, int(profit), avgpl, brightday, int(greatgain), darkday, int(greatloss))
+formattedoutput = generateoutput(count, int(profit), avgpl, brightday, int(greatgain), darkday, int(greatloss))
+
+# This clears the terminal so that our analysis will not be crowded out
+os.system('clear')
+print(formattedoutput)
+
+
+with open(analysis, 'w') as analysisfile:
+    analysisfile.write(formattedoutput)
