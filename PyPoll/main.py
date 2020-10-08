@@ -29,17 +29,14 @@ with open(electiondata, 'r') as electionfile:
         count += 1
 
         if voter[2] in candidates:
-            # SOMETHING
             selection = candidates.index(voter[2])
             votes[selection] += 1
 
-            print(voter[2])
         else:
             candidates.append(voter[2])
             votes.append(1)
 
 
-        if count == 15:
-            print(candidates)
-            print(votes)
-            break
+print(count)
+print(candidates)
+print(votes)
