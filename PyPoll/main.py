@@ -1,5 +1,6 @@
 import os
 import csv
+import numpy
 
 electiondata = os.path.join('Resources', 'election_data.csv')
 analysis = os.path.join('analysis','Election_Results.txt')
@@ -7,15 +8,24 @@ analysis = os.path.join('analysis','Election_Results.txt')
 count = 0
 candidates = []
 votes = []
+percentages = []
+finalout = ""
 
 
 
-def generateoutput(months, total, average, goodday, maxprofit, badday, maxloss):
+def generateoutput(totalvotes, candidates, earnedvotes, percentages, winner):
     # This function puts the output into a nice string that can be written into a file or printed to the terminal
     formatted = ('Election Results' + '\n' 
                 '-------------------------' + '\n' +
-                'Total Votes: ' + str(months) + '\n'
+                'Total Votes: ' + str(totalvotes) + '\n'
                 '-------------------------' + '\n')
+    for i in range(len(candidates)):
+        formatted += str(candidates[i]) + ": " + str(percentages[i]) + "% (" + str(earnedvotes[i]) + ")\n"
+
+    formatted += ('-------------------------' + '\n' 
+                  "Winner: " + winner + '\n'
+                '-------------------------'
+                  )
 
     return formatted
 
@@ -37,6 +47,11 @@ with open(electiondata, 'r') as electionfile:
             votes.append(1)
 
 
-print(count)
-print(candidates)
-print(votes)
+for i in votes:
+    percentages.append(numpy.round((i/count * 100),3))
+
+max = percentages.index(max(percentages))
+winner = candidates[max]
+
+finalout = generateoutput(count, candidates, votes, percentages, winner)
+print(finalout)
