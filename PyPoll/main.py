@@ -55,3 +55,6 @@ winner = candidates[max]
 
 finalout = generateoutput(count, candidates, votes, percentages, winner)
 print(finalout)
+
+with open(analysis, 'w') as analysisfile:
+    analysisfile.write(finalout)
